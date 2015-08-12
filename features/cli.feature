@@ -279,7 +279,7 @@ Scenario: run a single failing feature
       forced error
 
       Failing scenarios:
-      <current-directory>/features/a.feature:2 # Scenario:
+      features/a.feature:2 # Scenario:
 
       1 scenario (1 failed)
       1 step (1 failed)
@@ -313,7 +313,7 @@ Scenario: run a single failing feature
       forced error
 
       Failing scenarios:
-      <current-directory>/features/a.feature:2 # Scenario:
+      features/a.feature:2 # Scenario:
 
       1 scenario (1 failed)
       1 step (1 failed)
@@ -353,7 +353,7 @@ Scenario: run a single failing feature
       forced error
 
       Failing scenarios:
-      <current-directory>/features/a.feature:2 # Scenario:
+      features/a.feature:2 # Scenario:
 
       1 scenario (1 failed)
       1 step (1 failed)
