@@ -130,6 +130,141 @@ Feature: Command line interface
       """
     And the exit status should be 0
 
+  @part1
+  Scenario: run only one part of a test suite
+    Given a file named "features/a.feature" with:
+      """
+      Feature: feature1
+        Scenario:
+          When a step is passing
+      Feature: feature2
+        Scenario:
+          When a step is passing
+      Feature: feature3
+        Scenario:
+          When a step is passing
+      Feature: feature4
+        Scenario:
+          When a step is passing
+      Feature: feature5
+        Scenario:
+          When a step is passing
+      """
+    And a file named "step_definitions/cucumber_steps.js" with:
+      """
+      var cucumberSteps = function() {
+        this.When(/^a step is passing$/, function(callback) { callback(); });
+      };
+      module.exports = cucumberSteps;
+      """
+    When I run cucumber.js with `--part 2/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
+      """
+      Feature: feature2
+
+
+
+        Scenario:                # features/a.feature:5
+          When a step is passing # features/a.feature:6
+
+
+      Feature: feature5
+
+
+
+        Scenario:                # features/a.feature:14
+          When a step is passing # features/a.feature:15
+
+
+      2 scenarios (2 passed)
+      2 steps (2 passed)
+      """
+  @part2
+  Scenario: cover all scenarios of a test suite by partitioning
+    Given a file named "features/a.feature" with:
+      """
+      Feature: feature1
+        Scenario:
+          When a step is passing
+      Feature: feature2
+        Scenario:
+          When a step is passing
+      Feature: feature3
+        Scenario:
+          When a step is passing
+      Feature: feature4
+        Scenario:
+          When a step is passing
+      Feature: feature5
+        Scenario:
+          When a step is passing
+      """
+    And a file named "step_definitions/cucumber_steps.js" with:
+      """
+      var cucumberSteps = function() {
+        this.When(/^a step is passing$/, function(callback) { callback(); });
+      };
+      module.exports = cucumberSteps;
+      """
+    When I run cucumber.js with `--part 1/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
+      """
+      Feature: feature1
+      
+      
+      
+        Scenario:                # features/a.feature:2
+          When a step is passing # features/a.feature:3
+      
+      
+      Feature: feature4
+      
+      
+      
+        Scenario:                # features/a.feature:11
+          When a step is passing # features/a.feature:12
+      
+      
+      2 scenarios (2 passed)
+      2 steps (2 passed)
+      """
+    When I run cucumber.js with `--part 2/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
+      """
+      Feature: feature2
+      
+      
+      
+        Scenario:                # features/a.feature:5
+          When a step is passing # features/a.feature:6
+      
+      
+      Feature: feature5
+      
+      
+      
+        Scenario:                # features/a.feature:14
+          When a step is passing # features/a.feature:15
+      
+      
+      2 scenarios (2 passed)
+      2 steps (2 passed)
+      """
+    When I run cucumber.js with `--part 3/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
+      """
+      Feature: feature3
+      
+      
+      
+        Scenario:                # features/a.feature:8
+          When a step is passing # features/a.feature:9
+      
+      
+      1 scenario (1 passed)
+      1 step (1 passed)
+      """
+    
   Scenario: display Cucumber version
     When I run cucumber.js with `--version`
     Then I see the version of Cucumber
@@ -145,7 +280,7 @@ Feature: Command line interface
     Then I see the help of Cucumber
     And the exit status should be 0
 
-Scenario: run a single failing feature
+  Scenario: run a single failing feature
     Given a file named "features/a.feature" with:
       """
       Feature: some feature
