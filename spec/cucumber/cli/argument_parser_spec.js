@@ -193,12 +193,25 @@ describe("Cucumber.Cli.ArgumentParser", function () {
       expect(knownOptionDefinitions['profile']).toEqual([String, Array]);
     });
 
+    });
+
+    it("defines a repeatable --tags option", function () {
+      expect(knownOptionDefinitions['tags']).toEqual([String, Array]);
+    });
+
+    it("defines a repeatable --profile option", function () {
+      expect(knownOptionDefinitions['profile']).toEqual([String, Array]);
+    });
+
     it("defines a repeatable --compiler option", function () {
       expect(knownOptionDefinitions['compiler']).toEqual([String, Array]);
     });
 
     it("defines a repeatable --format option", function () {
       expect(knownOptionDefinitions['format']).toEqual([String, Array]);
+
+    it("defines a --format option", function () {
+      expect(knownOptionDefinitions['format']).toEqual(String);
     });
 
     it("defines a --strict flag", function () {
@@ -251,6 +264,30 @@ describe("Cucumber.Cli.ArgumentParser", function () {
 
     it("defines -p as an alias to --profile", function () {
       expect(shortenedOptionDefinitions['p']).toEqual(['--profile']);
+    });
+
+    it("defines -S as an alias to --strict", function () {
+      expect(shortenedOptionDefinitions['S']).toEqual(['--strict']);
+    });
+
+    it("defines -d as an alias to --dry-run", function () {
+      expect(shortenedOptionDefinitions['d']).toEqual(['--dry-run']);
+    });
+
+    it("defines -h as an alias to --help", function () {
+      expect(shortenedOptionDefinitions['h']).toEqual(['--help']);
+    });
+
+    it("defines -t as an alias to --tags", function () {
+      expect(shortenedOptionDefinitions['t']).toEqual(['--tags']);
+    });
+
+    it("defines -v as an alias to --version", function () {
+      expect(shortenedOptionDefinitions['v']).toEqual(['--version']);
+    });
+
+    it("defines -i as an alias to --no-snippets", function () {
+      expect(shortenedOptionDefinitions['i']).toEqual(['--no-snippets']);
     });
 
     it("defines -S as an alias to --strict", function () {
