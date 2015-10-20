@@ -193,8 +193,6 @@ describe("Cucumber.Cli.ArgumentParser", function () {
       expect(knownOptionDefinitions['profile']).toEqual([String, Array]);
     });
 
-    });
-
     it("defines a repeatable --tags option", function () {
       expect(knownOptionDefinitions['tags']).toEqual([String, Array]);
     });
@@ -209,9 +207,6 @@ describe("Cucumber.Cli.ArgumentParser", function () {
 
     it("defines a repeatable --format option", function () {
       expect(knownOptionDefinitions['format']).toEqual([String, Array]);
-
-    it("defines a --format option", function () {
-      expect(knownOptionDefinitions['format']).toEqual(String);
     });
 
     it("defines a --strict flag", function () {
@@ -241,6 +236,7 @@ describe("Cucumber.Cli.ArgumentParser", function () {
     it("defines a --backtrace flag", function () {
       expect(knownOptionDefinitions['backtrace']).toEqual(Boolean);
     });
+
   });
 
   describe("getShortenedOptionDefinitions()", function () {
