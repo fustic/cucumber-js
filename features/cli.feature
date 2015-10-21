@@ -131,25 +131,22 @@ Feature: Command line interface
       """
     And the exit status should be 0
 
+  @parts
   Scenario: run only one part of a test suite
     Given a file named "features/a.feature" with:
       """
       Feature: feature1
         Scenario:
           When a step is passing
-
       Feature: feature2
         Scenario:
           When a step is passing
-
       Feature: feature3
         Scenario:
           When a step is passing
-
       Feature: feature4
         Scenario:
           When a step is passing
-
       Feature: feature5
         Scenario:
           When a step is passing
@@ -161,39 +158,43 @@ Feature: Command line interface
       };
       module.exports = cucumberSteps;
       """
-    When I run `cucumber.js --part 2/3 -r step_definitions -f pretty features`
-    Then it passes with:
+    When I run cucumber.js with `--part 2/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
       """
-      feature2
-      """
-    And it passes with:
-      """
-      feature5
-      """
-    And it passes with:
-      """
-      2 passed
+      Feature: feature2
+        Scenario:                # features/a.feature:6
+          When a step is passing # features/a.feature:7
+
+
+      Feature: feature5
+
+
+
+        Scenario:                # features/a.feature:18
+          When a step is passing # features/a.feature:19
+
+
+      2 scenarios (2 passed)
+      2 steps (2 passed)
+      <duration-stat>
       """
 
+  @parts1
   Scenario: cover all scenarios of a test suite by partitioning
     Given a file named "features/a.feature" with:
       """
       Feature: feature1
         Scenario:
           When a step is passing
-
       Feature: feature2
         Scenario:
           When a step is passing
-
       Feature: feature3
         Scenario:
           When a step is passing
-
       Feature: feature4
         Scenario:
           When a step is passing
-
       Feature: feature5
         Scenario:
           When a step is passing
@@ -205,42 +206,67 @@ Feature: Command line interface
       };
       module.exports = cucumberSteps;
       """
-    When I run `cucumber.js --part 1/3 -r step_definitions -f pretty features`
-    Then it passes with:
+    When I run cucumber.js with `--part 1/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
       """
-      feature1
-      """
-    And it passes with:
-      """
-      feature4
-      """
-    And it passes with:
-      """
-      2 passed
-      """
-    When I run `cucumber.js --part 2/3 -r step_definitions -f pretty features`
-    Then it passes with:
-      """
-      feature2
-      """
-    And it passes with:
-      """
-      feature5
-      """
-    And it passes with:
-      """
-      2 passed
-      """
-    When I run `cucumber.js --part 3/3 -r step_definitions -f pretty features`
-     Then it passes with:
-      """
-      feature3
-      """
-    And it passes with:
-      """
-      1 passed
-      """
+      Feature: feature1
 
+
+
+        Scenario:                # features/a.feature:2
+          When a step is passing # features/a.feature:3
+
+
+      Feature: feature4
+
+
+
+        Scenario:                # features/a.feature:14
+          When a step is passing # features/a.feature:15
+
+
+      2 scenarios (2 passed)
+      2 steps (2 passed)
+      <duration-stat>
+      """
+    When I run cucumber.js with `--part 2/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
+      """
+      Feature: feature2
+
+
+
+        Scenario:                # features/a.feature:6
+          When a step is passing # features/a.feature:7
+
+
+      Feature: feature5
+
+
+
+        Scenario:                # features/a.feature:18
+          When a step is passing # features/a.feature:19
+
+
+      2 scenarios (2 passed)
+      2 steps (2 passed)
+      <duration-stat>
+      """
+    When I run cucumber.js with `--part 3/3 -r step_definitions -f pretty features`
+    Then it outputs this text:
+      """
+      Feature: feature3
+
+
+
+        Scenario:                # features/a.feature:10
+          When a step is passing # features/a.feature:11
+
+
+      1 scenario (1 passed)
+      1 step (1 passed)
+      <duration-stat>
+      """
     
   Scenario: display Cucumber version
     When I run cucumber.js with `--version`

@@ -138,10 +138,11 @@ var cliSteps = function cliSteps() {
     actualOutput = normalizeText(actualOutput);
     expectedOutput = normalizeText(expectedOutput);
 
+
+    console.log('actual:' + actualOutput);
+    console.log('expected:' + expectedOutput);
     if (actualOutput != expectedOutput)
-      throw new Error("Expected output to match the following:\n'" + expectedOutput + "'\n" +
-                      "Got:\n'" + actualOutput+ "'.\n" +
-                      getAdditionalErrorText(world.lastRun));
+      throw new Error(1);
     callback();
   });
 
